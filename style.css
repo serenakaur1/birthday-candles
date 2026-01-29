@@ -30,7 +30,7 @@ body {
 }
 
 .name {
-  color: gold;
+  color: rgba(255, 217, 0, 0.297);
   font-family: "Inter", sans-serif;
   font-weight: 800;
   font-style: italic;
