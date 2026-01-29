@@ -211,10 +211,6 @@ function initSpeechBlow() {
 
   if (!SpeechRecognition) {
     console.warn("SpeechRecognition not supported in this browser.");
-    if (instructionsEl) {
-      instructionsEl.innerHTML =
-        `Your browser doesn't support voice recognition 😭<br/>Try Chrome on desktop.`;
-    }
     return;
   }
 
@@ -229,7 +225,8 @@ function initSpeechBlow() {
       transcript += event.results[i][0].transcript.toLowerCase();
     }
 
-    // ✅ if they say "blow", blow out candles
+    console.log("Heard:", transcript);
+
     if (transcript.includes("blow")) {
       blowOutCandles();
     }
@@ -237,40 +234,27 @@ function initSpeechBlow() {
 
   recognition.onerror = (e) => {
     console.warn("Speech recognition error:", e.error);
-
-    // Some browsers block autoplay mic until a gesture
-    if (e.error === "not-allowed" || e.error === "service-not-allowed") {
-      if (instructionsEl) {
-        instructionsEl.innerHTML =
-          `Mic blocked — click once anywhere to enable voice, then say <span class="blow-word">"blow"</span> ✨`;
-      }
-
-      // One click to re-try starting recognition
-      document.body.addEventListener(
-        "click",
-        () => {
-          try { recognition.start(); } catch (err) {}
-          if (instructionsEl) {
-            instructionsEl.innerHTML =
-              `Now say <span class="blow-word">"blow"</span> to blow out the candles ✨`;
-          }
-        },
-        { once: true }
-      );
-    }
   };
 
-  // Try start immediately (works on many desktops)
-  try {
-    recognition.start();
-  } catch (e) {
-    // ignore "already started" etc.
-  }
+  recognition.onend = () => {
+    // auto-restart if Chrome stops it
+    try { recognition.start(); } catch (e) {}
+  };
+
+  // 🔐 REQUIRED user interaction trigger
+  document.body.addEventListener("click", () => {
+    try {
+      recognition.start();
+      console.log("🎤 Voice control activated");
+    } catch (e) {}
+  }, { once: true });
 }
+
 
 // ------------------- Start everything -------------------
 window.addEventListener("DOMContentLoaded", () => {
   initCamera();
-  startPlaneSparkles();
   initSpeechBlow();
+  startPlaneSparkles();
 });
+
