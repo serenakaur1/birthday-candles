@@ -14,15 +14,15 @@ body {
   align-items: center;
   justify-content: center;
 
-  /* subtle background */
   background: radial-gradient(circle at top, #ffffff 0%, #f6f7ff 55%, #ffffff 100%);
+  overflow-x: hidden;
 }
 
 /* --- Title block --- */
 .page-title {
   text-align: center;
   line-height: 1.25;
-  margin: 0 1rem 0.5rem;
+  margin: 0 1rem 0.9rem;
 
   font-size: 2.3rem;
   font-family: "Pixelify Sans", sans-serif;
@@ -30,29 +30,28 @@ body {
 }
 
 .name {
-  color: #b8860b;
+  /* darker gold, more readable */
+  color: #8b6b12;
   font-family: "Inter", sans-serif;
   font-weight: 800;
   font-style: italic;
-  position: relative;
 
   animation: nameGlow 1.8s ease-in-out infinite;
-  text-shadow: 0 0 6px rgba(255, 45, 85, 0.45);
 }
 
 @keyframes nameGlow {
   0% {
-    text-shadow: 0 0 4px rgba(184, 134, 11, 0.3);
+    text-shadow: 0 0 4px rgba(139, 107, 18, 0.25);
   }
   50% {
-    text-shadow: 0 0 12px rgba(184, 134, 11, 0.7);
+    text-shadow: 0 0 12px rgba(139, 107, 18, 0.55);
   }
   100% {
-    text-shadow: 0 0 4px rgba(184, 134, 11, 0.3);
+    text-shadow: 0 0 4px rgba(139, 107, 18, 0.25);
   }
 }
 
-
+/* Make subtitle + from SAME font */
 .subtitle,
 .from {
   font-family: "Inter", sans-serif;
@@ -61,59 +60,7 @@ body {
   font-weight: 500;
   color: #444;
   display: block;
-  margin-top: 0.2rem;
-}
-
-.plane {
-  display: inline-block;
-  margin-left: 0.25rem;
-  transform: rotate(-10deg);
-  animation: floatPlane 2.5s ease-in-out infinite;
-}
-
-.plane {
-  position: relative;
-  display: inline-block;
-  margin-left: 0.25rem;
-  transform: rotate(-10deg);
-  animation: floatPlane 2.5s ease-in-out infinite;
-}
-
-.plane::after {
-  content: "✦ ✧ ✦";
-  position: absolute;
-  left: -38px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.85rem;
-  opacity: 0.8;
-  letter-spacing: 2px;
-
-  animation: sparkleTrail 0.8s ease-in-out infinite;
-}
-
-@keyframes sparkleTrail {
-  0% {
-    transform: translate(-2px, -50%) scale(0.95);
-    opacity: 0.3;
-    filter: blur(0.2px);
-  }
-  50% {
-    transform: translate(-6px, -50%) scale(1.05);
-    opacity: 0.95;
-    filter: blur(0px);
-  }
-  100% {
-    transform: translate(-2px, -50%) scale(0.95);
-    opacity: 0.35;
-    filter: blur(0.2px);
-  }
-}
-
-@keyframes floatPlane {
-  0% { transform: translateY(0px) rotate(-10deg); }
-  50% { transform: translateY(-6px) rotate(-10deg); }
-  100% { transform: translateY(0px) rotate(-10deg); }
+  margin-top: 0.25rem;
 }
 
 /* --- Main content area --- */
@@ -183,17 +130,17 @@ body {
 
 /* Instructions */
 .instructions {
-  margin-top: 0.5rem;
-  font-size: 0.7rem;
+  margin-top: 0.55rem;
+  font-size: 0.75rem;
   color: #051fc2;
   font-family: "Inter", sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-style: italic;
   text-align: center;
 }
 
 .blow-word {
-  font-weight: 800;
+  font-weight: 900;
   color: #ff2d55;
   padding: 0 0.2rem;
 }
@@ -229,41 +176,32 @@ body {
   100% { transform: translateY(110vh) translateX(0) rotate(720deg); opacity: 0; }
 }
 
-/* Flying plane lane inside the title */
-.plane-wrap {
-  position: relative;
-  display: inline-block;
-  width: 70px;        /* “runway” length */
-  height: 1.2em;
-  vertical-align: middle;
-  overflow: visible;
-}
+/* --- Plane flying across the whole screen --- */
+.sky-plane {
+  position: fixed;
+  top: 90px;
+  left: -90px;
+  font-size: 2rem;
+  z-index: 2000;
+  pointer-events: none;
 
-.plane {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-55%) rotate(-10deg);
-  font-size: 1.05em;
-
-  animation: planeFly 3.2s ease-in-out infinite;
+  animation: flyAcross 7s linear infinite;
   will-change: transform;
 }
 
-@keyframes planeFly {
-  0%   { transform: translate(0px, -55%) rotate(-10deg); }
-  50%  { transform: translate(60px, -65%) rotate(-10deg); }
-  100% { transform: translate(0px, -55%) rotate(-10deg); }
+@keyframes flyAcross {
+  0%   { transform: translateX(0) rotate(-8deg); opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { transform: translateX(calc(100vw + 180px)) rotate(-8deg); opacity: 0; }
 }
 
-/* Sparkles created by JS */
+/* Sparkles from JS */
 .sparkle {
   position: fixed;
-  z-index: 9999;
+  z-index: 1999;
   pointer-events: none;
-  font-size: 0.85rem;
   opacity: 0;
-
   animation: sparklePop 900ms ease-out forwards;
   text-shadow: 0 0 10px rgba(255, 45, 85, 0.22);
 }
