@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday~</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1 class="page-title">
+        Happy Birthday <span class="name">Param</span>!! 🎂
+        <span class="plane" aria-hidden="true">✈️</span>
+        <br />
+        <span class="wish">I hope this year your dreams can take flight</span> 🎉
+        <br />
+        <span class="from">From your fan, <span class="serena">Serena</span> ~ 😊</span>
+    </h1>
+    <div class="content">
+      <div class="webcam">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas id="canvas"> </canvas>
+      </div>
+      <div class="cake-area">
+        <img src="assets/cake_bg.png" alt="" class="cake-bg" />
+        <img src="assets/cake_unlit.gif" alt="" class="cake" />
+        <img src="assets/match.gif" alt="" class="match" />
+      </div>
+      <p class="instructions">
+        Use your hands to light the cake, then blow out the candles!
+      </p>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
