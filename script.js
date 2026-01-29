@@ -269,3 +269,43 @@ window.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", startAudio);
   document.body.addEventListener("touchstart", startAudio);
 });
+
+// ✨ Sparkle trail behind the flying plane (pure fun)
+const SPARKLES = ["✦", "✧", "⋆", "⭒", "˚", "⊹"];
+
+function spawnSparkle(x, y) {
+  const s = document.createElement("span");
+  s.className = "sparkle";
+  s.textContent = SPARKLES[Math.floor(Math.random() * SPARKLES.length)];
+
+  // position near plane
+  s.style.left = `${x}px`;
+  s.style.top = `${y}px`;
+
+  // slight random size
+  s.style.fontSize = `${0.7 + Math.random() * 0.8}rem`;
+
+  document.body.appendChild(s);
+
+  setTimeout(() => s.remove(), 950);
+}
+
+function startPlaneSparkles() {
+  const plane = document.querySelector(".plane");
+  if (!plane) return;
+
+  setInterval(() => {
+    const r = plane.getBoundingClientRect();
+    // trail spawns slightly behind the plane
+    const x = r.left + r.width * 0.2;
+    const y = r.top + r.height * 0.55;
+
+    // add tiny jitter
+    spawnSparkle(x + (Math.random() - 0.5) * 10, y + (Math.random() - 0.5) * 10);
+  }, 120);
+}
+
+// Start after page loads
+window.addEventListener("DOMContentLoaded", () => {
+  startPlaneSparkles();
+});
